@@ -7,20 +7,21 @@ import {
     RecentGameplay, 
     RecommendedGames, 
     TopGenres 
-} from "../components"
+} from '../../components';
+import './PlayerData.css';
 
 const PlayerData = () => {
     return (
         <div className="flex-col">
             {/* Row 1 */}
-            <div className="flex justify-between gap-4">
+            <div className="flex-row justify-between">
                 <ProfileSummary />
                 <FavoriteGames />
                 <PlayerLocation />
             </div>
 
             {/* Row 2 */}
-            <div className="flex justify-between gap-4">
+            <div className="flex-row flex-fill justify-between">
                 <Achievements />
                 <TopGenres />
                 <RecentGameplay />
@@ -28,7 +29,7 @@ const PlayerData = () => {
             </div>
 
             {/* Row 3 */}
-            <div className="flex justify-center gap-4">
+            <div className="flex-row flex-fill justify-center">
                 <RecommendedGames />
             </div>
         </div>
