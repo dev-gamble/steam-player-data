@@ -2,8 +2,8 @@ import {
     Achievements, 
     FavoriteGames, 
     Friends, 
-    PlayerLocation, 
-    ProfileSummary, 
+    Location, 
+    Summary, 
     RecentGameplay, 
     RecommendedGames, 
     TopGenres 
@@ -15,9 +15,9 @@ const PlayerData = () => {
         <div className="flex-col">
             {/* Row 1 */}
             <div className="flex-row justify-between">
-                <ProfileSummary />
+                <Summary />
                 <FavoriteGames />
-                <PlayerLocation />
+                <Location />
             </div>
 
             {/* Row 2 */}

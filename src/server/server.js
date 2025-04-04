@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import steamRoutes from './routes/steamRoutes.mjs'
+import steamRoutes from './routes/steam.routes.js'
 
 dotenv.config();
 
