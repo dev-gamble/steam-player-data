@@ -4,7 +4,6 @@ import { Achievement, Friend, PlayerSummary } from '../models';
 const api = axios.create({
     baseURL: 'http://localhost:3001/api/steam',
 });
-  
 
 // Friends
 export const getFriends = async (steamid: string): Promise<Friend[]> => {
