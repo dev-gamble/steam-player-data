@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { getFriends, getOwnedGames, getPlayerSummary, getRecentlyPlayedGames } from '../services/steam.api';
-import { Friend, OwnedGames, PlayerSummary, RecentlyPlayedGames } from '../models';
+import { Friend, OwnedGames, PlayerSummary, RecentlyPlayedGames } from '../../shared/models';
 
 
 interface DataProviderProps {
@@ -32,25 +32,25 @@ export const DataProvider = ({ steamid, children }: DataProviderProps) => {
     const [recentlyPlayedGames, setRecentlyPlayedGames] = useState<RecentlyPlayedGames | null>(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-
-            const f = await getFriends(steamid);
-            setFriends(f);
-
-            const og = await getOwnedGames(steamid);
-            setOwnedGames(og);
-
-            const p = await getPlayerSummary(steamid);
-            setPlayer(p);
-
-            const rpg = await getRecentlyPlayedGames(steamid);
-            setRecentlyPlayedGames(rpg);
-
-        };
+        setLoading(true);
         fetchData();
         setLoading(false);
     }, [steamid]);
+
+    const fetchData = async () => {
+
+        const f = await getFriends(steamid);
+        setFriends(f);
+
+        const og = await getOwnedGames(steamid);
+        setOwnedGames(og);
+
+        const p = await getPlayerSummary(steamid);
+        setPlayer(p);
+
+        const rpg = await getRecentlyPlayedGames(steamid);
+        setRecentlyPlayedGames(rpg);
+    };
 
     return (
         <DataContext.Provider value={{ 

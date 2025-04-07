@@ -47,7 +47,7 @@ const Location: React.FC<Props> = ({ width = 550, height = 350 }) => {
     let lastX: number;
     let lastY: number;
 
-    let momentumId: number;
+    //let momentumId: number;
 
     const dragBehavior = d3
       .drag<SVGSVGElement, unknown>()

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Achievement, Friend, PlayerSummary } from '../models';
+import { GameAchievement, Friend, PlayerSummary } from '../../shared/models';
 
 const api = axios.create({
     baseURL: 'http://localhost:3001/api/steam',
@@ -7,19 +7,19 @@ const api = axios.create({
 
 // Friends
 export const getFriends = async (steamid: string): Promise<Friend[]> => {
-    const res = await api.get('/friends', { params: steamid });
+    const res = await api.get('/friends', { params: { steamid } });
     return res.data;
 }
 
 // Game Achievements
-export const getGameAchievements = async (appid: number, steamid: string): Promise<Achievement[]> => {
+export const getGameAchievements = async (appid: number, steamid: string): Promise<GameAchievement[]> => {
     const res = await api.get('/game-achievements', { params: { appid, steamid } });
     return res.data;
 }
 
 // Game Details
 export const getGameDetails = async (appid: number) => {
-    const res = await api.get('/game-details', { params: appid });
+    const res = await api.get('/game-details', { params: { appid } });
     return res.data;
 }
 
@@ -37,13 +37,13 @@ export const getOwnedGames = async (steamid: string) => {
 
 // Player Summary
 export const getPlayerSummary = async (steamid: string): Promise<PlayerSummary> => {
-    const res = await api.get('/player-summary', { params: steamid });
-    return res.data.players[0];
+    const res = await api.get('/player-summary', { params: { steamid } });
+    return res.data;
 }
 
 // Recently Played Games
 export const getRecentlyPlayedGames = async (steamid: string) => {
-    const res = await api.get('/recently-played-games', { params: steamid });
+    const res = await api.get('/recently-played-games', { params: { steamid } });
     return res.data;
 }
 

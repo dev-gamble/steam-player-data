@@ -1,5 +1,5 @@
 export interface PlayerSummary {
-    steamid: string | undefined;
+    steamid: string;
     personaname: string;
     profileurl: string;
     avatar: string;

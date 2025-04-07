@@ -1,11 +1,13 @@
 import express from 'express';
-import dotenv from 'dotenv';
-import steamRoutes from './routes/steam.routes.js'
+import cors from 'cors';
+import steamRoutes from './routes/steam.routes'
 
-dotenv.config();
-
-const app = express();
+const app: express.Application = express();
 const PORT = 3001;
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
 
 app.use('/api/steam', steamRoutes);
 

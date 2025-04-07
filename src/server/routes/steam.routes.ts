@@ -1,4 +1,5 @@
-import express from 'express';
+import { Request, Response, Router } from 'express';
+
 import { 
   getFriends, 
   getGameAchievements, 
@@ -8,14 +9,17 @@ import {
   getPlayerSummary, 
   getRecentlyPlayedGames, 
   getSteamId 
-} from '../services/steam.service.js';
+} from '../services/steam.service';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/friends', async (req, res) => {
+router.get('/friends', async (req: Request, res: Response) => {
   const { steamid } = req.query;
 
   try {
+    if (!steamid || typeof steamid !== 'string')
+      throw new Error(`invalid steamid: ${steamid}`);
+
     const data = await getFriends(steamid);
     res.json(data);
   } catch (error) {
@@ -24,11 +28,17 @@ router.get('/friends', async (req, res) => {
   }
 });
 
-router.get('/game-achievements', async (req, res) => {
+router.get('/game-achievements', async (req: Request, res: Response) => {
     const { appid, steamid } = req.query;
   
     try {
-      const data = await getGameAchievements(appid, steamid);
+      if (isNaN(Number(appid)))
+        throw new Error(`Invalid appid: ${appid}`);
+
+      if (!steamid || typeof steamid !== 'string')
+        throw new Error(`invalid steamid: ${steamid}`);
+
+      const data = await getGameAchievements(Number(appid), steamid);
       res.json(data);
       } catch (error) {
         console.error('Steam API error:', error);
@@ -36,11 +46,14 @@ router.get('/game-achievements', async (req, res) => {
     }
 });
 
-router.get('/game-details', async (req, res) => {
+router.get('/game-details', async (req: Request, res: Response) => {
   const { appid } = req.query;
 
   try {
-    const data = await getGameDetails(appid);
+    if (isNaN(Number(appid)))
+      throw new Error(`Invalid appid: ${appid}`);
+
+    const data = await getGameDetails(Number(appid));
     res.json(data);
   } catch (error) {
     console.error('Steam API error:', error);
@@ -48,11 +61,17 @@ router.get('/game-details', async (req, res) => {
   }
 });
 
-router.get('/game-stats', async (req, res) => {
+router.get('/game-stats', async (req: Request, res: Response) => {
   const { appid, steamid } = req.query;
 
   try {
-    const data = await getGameStats(appid, steamid);
+    if (isNaN(Number(appid)))
+      throw new Error(`invalid appid: ${appid}`);
+
+    if (!steamid || typeof steamid !== 'string')
+      throw new Error(`invalid steamid: ${steamid}`);
+    
+    const data = await getGameStats(Number(appid), steamid);
     res.json(data);
   } catch (error) {
     console.error('Steam API error:', error);
@@ -60,10 +79,13 @@ router.get('/game-stats', async (req, res) => {
   }
 });
 
-router.get('/owned-games', async (req, res) => {
+router.get('/owned-games', async (req: Request, res: Response) => {
   const { steamid } = req.query;
 
   try {
+    if (!steamid || typeof steamid !== 'string')
+      throw new Error(`Steam ID '${steamid}' is invalid.`);
+
     const data = await getOwnedGames(steamid);
     res.json(data);
   } catch (error) {
@@ -72,10 +94,13 @@ router.get('/owned-games', async (req, res) => {
   }
 });
 
-router.get('/player-summary', async (req, res) => {
+router.get('/player-summary', async (req: Request, res: Response) => {
   const { steamid } = req.query;
 
   try {
+    if (!steamid || typeof steamid !== 'string')
+      throw new Error(`Steam ID '${steamid}' is invalid.`);
+
     const data = await getPlayerSummary(steamid);
     res.json(data);
   } catch (error) {
@@ -84,10 +109,13 @@ router.get('/player-summary', async (req, res) => {
   }
 });
 
-router.get('/recently-played-games', async (req, res) => {
+router.get('/recently-played-games', async (req: Request, res: Response) => {
     const { steamid } = req.query;
   
     try {
+      if (!steamid || typeof steamid !== 'string')
+        throw new Error(`Steam ID '${steamid}' is invalid.`);
+
       const data = await getRecentlyPlayedGames(steamid);
       res.json(data);
     } catch (error) {
@@ -96,10 +124,13 @@ router.get('/recently-played-games', async (req, res) => {
     }
 });
 
-router.get('/steamid', async (req, res) => {
+router.get('/steamid', async (req: Request, res: Response) => {
     const { vanityurl } = req.query;
   
     try {
+      if (!vanityurl || typeof vanityurl !== 'string')
+        throw new Error(`Vanity URL '${vanityurl}' is invalid.`);
+
       const data = await getSteamId(vanityurl);
       res.json(data);
     } catch (error) {
