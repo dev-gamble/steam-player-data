@@ -1,4 +1,4 @@
-import './RecentGameplay.css';
+import '../styles/RecentGameplay.css';
 
 const RecentGameplay = () => {
     return (

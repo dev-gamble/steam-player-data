@@ -1,4 +1,4 @@
-import './FavoriteGames.css';
+import '../styles/FavoriteGames.css';
 
 const FavoriteGames = () => {
     return (

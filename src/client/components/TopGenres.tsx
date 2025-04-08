@@ -1,4 +1,4 @@
-import './TopGenres.css';
+import '../styles/TopGenres.css';
 
 const TopGenres = () => {
     return (

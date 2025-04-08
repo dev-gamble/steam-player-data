@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import PlayerData from './client/pages/PlayerData/PlayerData';
-import SteamIdInput from './client/components/SteamIdInput/SteamIdInput';
+import SteamIdInput from './client/components/SteamIdInput';
 import { DataProvider } from './client/context/DataContext';
 
 const App = () => {

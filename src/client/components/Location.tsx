@@ -4,7 +4,7 @@ import { geoPath, geoOrthographic } from 'd3-geo';
 import { feature } from 'topojson-client';
 import { FeatureCollection, Geometry } from 'geojson';
 import { Topology } from 'topojson-specification';
-import './Location.css'
+import '../styles/Location.css'
 
 type Props = {
   width?: number;

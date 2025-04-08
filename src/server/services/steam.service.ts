@@ -14,7 +14,7 @@ const key = process.env.STEAM_API_KEY;
 export const getFriends = async (steamid: string): Promise<Friend[]> => {
     const response = await fetch(`https://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${key}&steamid=${steamid}&relationship=friend`);
     const data = await response.json();
-    return data;
+    return data.friendslist.friends;
 }
 
 // Game Achievements
@@ -42,13 +42,14 @@ export const getGameStats = async (appid: number, steamid: string): Promise<Stat
 export const getOwnedGames = async (steamid: string): Promise<OwnedGames> => {
     const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${steamid}&format=json`);
     const data = await response.json();
-    return data;
+    return data.response;
 }
 
 // Player Summary
 export const getPlayerSummary = async (steamid: string): Promise<PlayerSummary> => {
     const response = await fetch(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${key}&steamids=${steamid}`);
-    return await response.json();
+    const data = await response.json();
+    return data.response.players[0];
 }
 
 // Recently Played Games

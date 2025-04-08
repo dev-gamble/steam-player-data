@@ -1,4 +1,4 @@
-import './Achievements.css';
+import '../styles/Achievements.css';
 
 const Achievements = () => {
     return (
