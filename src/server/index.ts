@@ -21,7 +21,7 @@ app.locals.cache = cache;
 (async () => {
     try {
         await cacheLatestExchangeRates(app.locals.cache);
-        console.log('Exchange rates cached on startup.');
+        console.log('Exchange rates cached.');
     } catch (err) {
         console.error('Failed to retrieve exchange rates.', err);
     }
