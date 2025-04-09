@@ -37,7 +37,7 @@ export const getGameDetails = async (appid: number, retries = 1): Promise<GameDe
             return response[_appid].data;
 
         if (attempt < retries)
-            await new Promise(resolve => setTimeout(resolve, 1000)); 
+            await new Promise(resolve => setTimeout(resolve, 500)); 
     }
   
     console.warn(`Failed to fetch game details for appid ${appid}`);
