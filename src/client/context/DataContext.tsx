@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { getFriends, getOwnedGames, getPlayerSummary, getRecentlyPlayedGames } from '../services/steam.api';
 import { Friend, OwnedGames, PlayerSummary, RecentlyPlayedGames } from '../../shared/models';
 
@@ -61,13 +61,14 @@ export const DataProvider = ({ steamid, children }: DataProviderProps) => {
         dispatch({ type: 'SET_LOADING', payload: true });
 
         try {
+
             const [friends, ownedGames, player, recentGames] = await Promise.all([
-              getFriends(steamid),
-              getOwnedGames(steamid),
-              getPlayerSummary(steamid),
-              getRecentlyPlayedGames(steamid),
+                getFriends(steamid),
+                getOwnedGames(steamid),
+                getPlayerSummary(steamid),
+                getRecentlyPlayedGames(steamid),
             ]);
-      
+    
             dispatch({ type: 'SET_FRIENDS', payload: friends });
             dispatch({ type: 'SET_OWNED_GAMES', payload: ownedGames });
             dispatch({ type: 'SET_PLAYER', payload: player });

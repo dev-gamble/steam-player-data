@@ -1,3 +1,4 @@
+import app from '..';
 import { 
     Friend, 
     GameAchievement, 
@@ -25,15 +26,22 @@ export const getGameAchievements = async (appid: number, steamid: string): Promi
 }
 
 // Game Details
-export const getGameDetails = async (appid: number): Promise<GameDetails> => {
-    const res = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
-    const response = await res.json();
-    const success = response[appid].success;
+export const getGameDetails = async (appid: number, retries = 1): Promise<GameDetails | null> => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+        const res = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
+        const response = await res.json();
 
-    if (!success) 
-        return {} as GameDetails;
-    
-    return response[appid].data;
+        const _appid = appid.toString();
+
+        if (response && response[_appid]?.success)
+            return response[_appid].data;
+
+        if (attempt < retries)
+            await new Promise(resolve => setTimeout(resolve, 1000)); 
+    }
+  
+    console.warn(`Failed to fetch game details for appid ${appid}`);
+    return null;
 }
 
 // Game Stats
@@ -47,18 +55,29 @@ export const getGameStats = async (appid: number, steamid: string): Promise<Stat
 export const getOwnedGames = async (steamid: string): Promise<OwnedGames> => {
     const res = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${steamid}&format=json`);
     const { response } = await res.json();
-    if (response === undefined)
-        throw new Error('Games are private');
+
+    if (!response || Object.keys(response).length === 0)
+        throw new Error('This account has restrictions.');
+
     const ownedGames = response as OwnedGames;
-    ownedGames.libraryValue = await getLibraryValue(ownedGames);
+    ownedGames.value = await getLibraryValue(ownedGames);
     return ownedGames;
 }
 
 const getLibraryValue = async (ownedGames: OwnedGames): Promise<number> => {
+    const exchangeRates = app.locals.cache.get('exchangeRates');
     const prices = await Promise.all(
         ownedGames?.games?.map(async (g) => {
             const details = await getGameDetails(g.appid);
-            return details.price_overview?.final ?? 0;
+            const priceData = details?.price_overview;
+            if (!priceData) return 0;
+
+            const currency = priceData.currency;
+            const finalPrice = priceData.final;
+            const rate = exchangeRates[currency] ?? 1; // Use USD if unknown
+
+            const usdPrice = currency === 'USD' ? finalPrice / 100 : (finalPrice / rate) / 100;
+            return usdPrice;
         })
     );
     return prices.reduce((sum, price) => sum + price, 0);

@@ -14,8 +14,13 @@ const Summary = () => {
     }, [state.ownedGames]);
 
     const libraryValue = useMemo(() => {
-        const value = state.ownedGames?.libraryValue ?? 0;
-        return '$' + (value / 100).toFixed(2);
+        const value = state.ownedGames?.value ?? 0;
+        return (value).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
     }, [state.ownedGames]);
 
     return (
@@ -27,7 +32,7 @@ const Summary = () => {
             <p>Hours played: {totalHoursPlayed ?? 0}</p>
             <p>Library value: {libraryValue}</p>
         </div>
-    )
+    );
 }
 
 export default Summary;

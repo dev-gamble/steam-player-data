@@ -57,7 +57,7 @@ router.get('/game-details', async (req: Request, res: Response) => {
     res.json(data);
   } catch (error) {
     console.error('Steam API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: error });
   }
 });
 
@@ -89,8 +89,8 @@ router.get('/owned-games', async (req: Request, res: Response) => {
     const data = await getOwnedGames(steamid);
     res.json(data);
   } catch (error) {
-    console.error('Steam API error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    const message = error instanceof Error ? error.message : 'Unknown error occurred';
+    res.status(500).json({ error: message });
   }
 });
 
