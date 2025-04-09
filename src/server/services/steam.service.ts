@@ -26,9 +26,14 @@ export const getGameAchievements = async (appid: number, steamid: string): Promi
 
 // Game Details
 export const getGameDetails = async (appid: number): Promise<GameDetails> => {
-    const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
-    const data = await response.json();
-    return data;
+    const res = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
+    const response = await res.json();
+    const success = response[appid].success;
+
+    if (!success) 
+        return {} as GameDetails;
+    
+    return response[appid].data;
 }
 
 // Game Stats
@@ -40,10 +45,24 @@ export const getGameStats = async (appid: number, steamid: string): Promise<Stat
 
 // Owned Games
 export const getOwnedGames = async (steamid: string): Promise<OwnedGames> => {
-    const response = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${steamid}&format=json`);
-    const data = await response.json();
-    return data.response;
+    const res = await fetch(`https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${key}&steamid=${steamid}&format=json`);
+    const { response } = await res.json();
+    if (response === undefined)
+        throw new Error('Games are private');
+    const ownedGames = response as OwnedGames;
+    ownedGames.libraryValue = await getLibraryValue(ownedGames);
+    return ownedGames;
 }
+
+const getLibraryValue = async (ownedGames: OwnedGames): Promise<number> => {
+    const prices = await Promise.all(
+        ownedGames?.games?.map(async (g) => {
+            const details = await getGameDetails(g.appid);
+            return details.price_overview?.final ?? 0;
+        })
+    );
+    return prices.reduce((sum, price) => sum + price, 0);
+};
 
 // Player Summary
 export const getPlayerSummary = async (steamid: string): Promise<PlayerSummary> => {

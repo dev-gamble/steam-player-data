@@ -14,17 +14,18 @@ const Summary = () => {
     }, [state.ownedGames]);
 
     const libraryValue = useMemo(() => {
-        let value = 0;
-        state.ownedGames?.games
-    }, [state.ownedGames])
-    
+        const value = state.ownedGames?.libraryValue ?? 0;
+        return '$' + (value / 100).toFixed(2);
+    }, [state.ownedGames]);
+
     return (
-        <div style={{ background: "#ccc", padding: "8px" }}>
+        <div>
             {state.player?.avatarfull && <img src={state.player?.avatarfull} alt="Player Avatar" />}
             <p>{state.player?.personaname ?? 'Unknown player'}</p>
             <p>Friends: {state.friends?.length ?? 0}</p>
-            <p>Total Hours Played: {totalHoursPlayed ?? 0}</p>
-            <p>Library Value: {}</p>
+            <p>Games: {state.ownedGames?.game_count}</p>
+            <p>Hours played: {totalHoursPlayed ?? 0}</p>
+            <p>Library value: {libraryValue}</p>
         </div>
     )
 }

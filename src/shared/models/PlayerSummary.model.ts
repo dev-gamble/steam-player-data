@@ -1,3 +1,5 @@
+import { Summary } from './Summary.model';
+
 export interface PlayerSummary {
     steamid: string;
     personaname: string;
@@ -15,4 +17,5 @@ export interface PlayerSummary {
     loccountrycode?: string;
     locstatecode?: string;
     loccityid?: number;
+    summary: Summary;
 }
