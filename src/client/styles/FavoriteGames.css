@@ -1,0 +1,73 @@
+.game-img-1 {
+    width: 400px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+.game-img-2 {
+    margin-top: 1rem;
+    width: 300px;
+    height: 150px;
+    border-radius: 8px;
+}
+
+.game-img-3 {
+    margin-top: 2rem;
+    width: 250px;
+    height: 125px;
+    border-radius: 8px;
+}
+
+.game-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.wrapper {
+    position: relative;
+    display: inline-block;
+}
+  
+.medal-icon {
+    position: absolute;
+    bottom: -22px;
+    right: -18px;
+    height: auto;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.hours {
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    pointer-events: none;
+}
+.pad-left {
+    padding-left: 8rem;
+}
+.pct {
+    /* position: absolute;
+    top: 0;
+    left: 0; */
+    pointer-events: none;
+    font-size: 12px;
+}
+
+.width-40 {
+    width: 40px;
+}
+
+.width-50 {
+    width: 50px;
+}
+
+.width-60 {
+    width: 60px;
+}
+
+strong {
+    margin-top: 0.5rem;
+}

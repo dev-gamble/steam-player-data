@@ -13,19 +13,16 @@ app.use(cors({
 
 app.use('/api/steam', steamRoutes);
 
-// Create a cache with a 1-hour TTL (3600 seconds)
-const cache = new NodeCache({ stdTTL: 3600 });
-app.locals.cache = cache;
-
-// Set cache
-(async () => {
-    try {
-        await cacheLatestExchangeRates(app.locals.cache);
-        console.log('Exchange rates cached.');
-    } catch (err) {
-        console.error('Failed to retrieve exchange rates.', err);
-    }
-})();
+// // Set cache
+// (async () => {
+//     try {
+//         app.locals.cache = new NodeCache();
+//         await cacheLatestExchangeRates(app.locals.cache);
+//         console.log('Exchange rates cached.');
+//     } catch (err) {
+//         console.error('Failed to retrieve exchange rates.', err);
+//     }
+// })();
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)

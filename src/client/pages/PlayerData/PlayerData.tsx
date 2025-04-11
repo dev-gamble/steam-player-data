@@ -8,11 +8,11 @@ import {
     RecommendedGames, 
     TopGenres 
 } from '../../components';
-import './PlayerData.css';
+import '../../styles/Common.css';
 
 const PlayerData = () => {
     return (
-        <div className="flex-col">
+        <div className="flex-col vh-90 pad-50">
             {/* Row 1 */}
             <div className="flex-row justify-between">
                 <Summary />

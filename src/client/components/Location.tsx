@@ -25,7 +25,7 @@ const Location: React.FC<Props> = ({ width = 550, height = 350 }) => {
     let path = geoPath(projection);
 
     const g = svg
-      .attr('viewBox', `-100 -120 ${width} ${height + 100}`)
+      .attr('viewBox', `-150 -100 ${width} ${height + 100}`)
       .attr(
         'style',
         `max-width: ${width}px; height: ${height}px; display: block; align-items: center; justify-content: center;`
