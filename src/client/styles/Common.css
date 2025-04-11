@@ -1,0 +1,50 @@
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.vh-90 {
+    height: 90vh;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-evenly {
+    justify-content: space-evenly;
+    gap: 3rem;
+}
+
+.flex-fill {
+    flex: 1;
+}
+
+.pad-10 {
+    padding: 10px;
+}
+
+.pad-20 {
+    padding: 20px;
+}
+
+.pad-30 {
+    padding: 30px;
+}
+
+.pad-40 {
+    padding: 40px;
+}
+
+.pad-50 {
+    padding: 50px;
+}

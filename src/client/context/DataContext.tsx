@@ -62,12 +62,14 @@ export const DataProvider = ({ steamid, children }: DataProviderProps) => {
 
         try {
 
-            const [friends, ownedGames, player, recentGames] = await Promise.all([
-                getFriends(steamid),
-                getOwnedGames(steamid),
-                getPlayerSummary(steamid),
-                getRecentlyPlayedGames(steamid),
-            ]);
+            const player = await getPlayerSummary(steamid);
+
+            const friends = await getFriends(steamid);
+
+            const ownedGames = await getOwnedGames(steamid);
+
+            const recentGames = await getRecentlyPlayedGames(steamid);
+
     
             dispatch({ type: 'SET_FRIENDS', payload: friends });
             dispatch({ type: 'SET_OWNED_GAMES', payload: ownedGames });

@@ -1,7 +1,6 @@
 .flex-col {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 .flex-row {
@@ -19,9 +18,13 @@
 
 .justify-evenly {
     justify-content: space-evenly;
-    gap: 3rem;
+    gap: 4rem;
 }
 
 .flex-fill {
     flex: 1;
+}
+
+.pad-40 {
+    padding: 40px;
 }
